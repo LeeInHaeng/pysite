@@ -11,16 +11,15 @@
       <div id="header">
          <h1>MySite</h1>
          <ul>
-            {% if 'auth_user_email' not in request.session %}
+            {% if 'authuser' not in request.session %}
                <li><a href="/user/loginform">로그인</a><li>
                <li><a href="/user/joinform">회원가입</a><li>
-            {% endif %}
-            {% if 'auth_user_email' in request.session %}
+            {% else %}
                <li><a href="/user/updateform">회원정보수정</a><li>
                <li><a href="/user/logout">로그아웃</a><li>
             {% endif %}
-            {% if 'auth_user_email' in request.session %}
-               <li>{{ request.session.auth_user_name }}님 안녕하세요 ^^;</li>
+            {% if 'authuser' in request.session %}
+               <li>{{ request.session.authuser.name }}님 안녕하세요 ^^;</li>
             {% endif %}
          </ul>
       </div>

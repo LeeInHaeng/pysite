@@ -28,3 +28,7 @@ def ajaxtest(request):
         ajax_data['data2'] = ajax_data['data2'] + '_success'
         ajax_data['data3'] = ajax_data['data3'] + '_success'
     return HttpResponse(json.dumps(ajax_data), content_type="application/json")
+
+
+def redirect(request):
+    return render(request, 'main/redirect.html')

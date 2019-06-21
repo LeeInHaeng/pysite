@@ -13,6 +13,7 @@
 
 					<label class="block-label" for="email">이메일</label>
 					<input id="email" name="email" type="text" value="">
+					<img src="/assets/images/check.png" id="check-image" style="display:none"/>
 					<input type="button" value="id 중복체크" id="check-email">
 					
 					<label class="block-label">패스워드</label>
@@ -51,9 +52,12 @@
 				dataType: "json",
 				data: "",
 				success: function(response){
-					//console.log(response.data)
+					if(response.result !== "success"){
+						alert('통신에 실패했습니다');
+						return;
+					}
 
-					if(response.data !== ""){
+					if(response.data !== "exist"){
 						alert('이미 존재하는 이메일입니다.\n다른 이메일을 사용해 주세요.');
 						$("#email").focus();
 						$("#email").val("");

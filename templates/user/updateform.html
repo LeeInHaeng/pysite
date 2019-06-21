@@ -6,22 +6,26 @@
 	{% block content %}
 			<div id="user">
 
-				<form id="join-form" name="joinForm" method="post" action="/user/update">
+				<form id="update-form" name="updateForm" method="post" action="/user/update">
 					{% csrf_token %}
 					<label class="block-label" for="name">이름</label>
-					<input id="name" name="name" type="text" value="">
+					<input id="name" name="name" type="text" value="{{ user.name }}">
 
 					<label class="block-label" for="email">이메일</label>
-					<input id="email" name="email" type="text" value="">
-					<input type="button" value="id 중복체크" id="check-email">
+					<h1>{{ user.email }}</h1>
 					
 					<label class="block-label">패스워드</label>
-					<input name="password" type="password" value="">
+					<input name="password" type="password" value="{{ user.password }}">
 					
 					<fieldset>
 						<legend>성별</legend>
-						<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
-						<label>남</label> <input type="radio" name="gender" value="male">
+						{% if user.gender == 'femail' %}
+							<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
+							<label>남</label> <input type="radio" name="gender" value="male">
+						{% else %}
+							<label>여</label> <input type="radio" name="gender" value="female">
+							<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
+						{% endif %}
 					</fieldset>
 					
 					<fieldset>
@@ -34,40 +38,4 @@
 					
 				</form>
 			</div>
-	{% endblock %}
-
-	{% block js %}
-	<script>
-		$('#check-email').click(function(){
-			var email = $('#email').val();
-			if(email == ''){
-				return;
-			}
-
-			/* ajax 통신 */
-			$.ajax({
-				url: "/user/api/checkemail?email=" + email,
-				type: "get",
-				dataType: "json",
-				data: "",
-				success: function(response){
-					//console.log(response.data)
-
-					if(response.data !== ""){
-						alert('이미 존재하는 이메일입니다.\n다른 이메일을 사용해 주세요.');
-						$("#email").focus();
-						$("#email").val("");
-						return;
-					}
-
-					$('#check-button').hide();
-					$('#check-image').show();
-
-				},
-				error: function(xhr, error){
-					console.error("error:" + error)
-				}
-			});
-		});
-	</script>
 	{% endblock %}

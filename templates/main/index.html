@@ -14,47 +14,4 @@
                   <a href="/guestbook">방명록</a>에 글 남기기<br>
                </p>
             </div>
-
-            <a href="/test?text_input=hihihi">get post test</a>
-
-            <form method="post" action="/test">
-                {% csrf_token %}
-                <input tpye="text" name="text_input"/>
-                <input type="submit">
-            </form>
-
-            <button id="ajax-test">ajax-test</button>
          {% endblock %}
-
-{% block js %}
-
-<script>
-    $('#ajax-test').click(function(){
-
-        var ajax_data = {
-            'data1': 'hihi1',
-            'data2': 'hihi2',
-            'data3': 'hihi3',
-         };
-
-    		/* ajax 통신 */
-			$.ajax({
-				url: "/ajaxtest",
-				type: "post",
-				dataType: "json",
-				data: JSON.stringify(ajax_data),
-				beforeSend: function(xhr){
-				    xhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
-				},
-				success: function(response){
-				    console.log(response);
-				},
-				error: function(xhr, error){
-					console.error("error:" + error)
-				}
-			});
-    })
-
-</script>
-
-{% endblock %}

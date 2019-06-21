@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+	{% if result == "fail" %}
+		alert('{{ message }}')
+		var url = '{{url}}'.replace('amp;','')
+		window.location.href = url
+	{% endif %}
+</script>
+
+</body>
+</html>

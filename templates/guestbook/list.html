@@ -1,4 +1,5 @@
 {% extends '../base.html' %}
+{% load mathfilters %}
  {% block csslink %}
 <link href="/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 {% endblock %}
@@ -25,9 +26,9 @@
 					<li>
 						<table>
 							<tr>
-								<td>{{ guestbook.id }}</td>
+								<td>{{ forloop.revcounter }}</td>
 								<td>{{ guestbook.name }}</td>
-								<td>{{ guestbook.reg_date }}</td>
+								<td>{{ guestbook.reg_date | date:'Y-m-d H:i:s' }}</td>
 								<td><a href="/guestbook/deleteform?no={{ guestbook.id }}">삭제</a></td>
 							</tr>
 							<tr>
