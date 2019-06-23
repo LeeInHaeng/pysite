@@ -21,6 +21,7 @@ import guestbook.views as guestbook_views
 import board.views as board_views
 
 urlpatterns = [
+    path('board/reply/write', board_views.reply_write),
     path('board/delete', board_views.delete),
     path('board/modify', board_views.modify),
     path('board/view', board_views.view),

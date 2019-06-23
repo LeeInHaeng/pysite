@@ -5,7 +5,7 @@
 
 	{% block content %}
 			<div id="board">
-				<form class="board-form" method="post" action="/board/write?search={{request.GET.search}}&page={{request.GET.page}}">
+				<form class="board-form" method="post" action="/board/reply/write?no={{request.GET.no}}&search={{request.GET.search}}&page={{request.GET.page}}">
 					{% csrf_token %}
 					<table class="tbl-ex">
 						<tr>

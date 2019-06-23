@@ -1,14 +1,15 @@
 {% extends '../base.html' %}
+{% load mathfilters %}
  {% block csslink %}
 <link href="/assets/css/board.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 	{% block content %}
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
-					<input type="submit" value="찾기">
-				</form>
+				<div id="search_form">
+					<input type="text" id="search" name="search" value="{{request.GET.search}}">
+					<input type="submit" id="search-btn" value="찾기">
+				</div>
 				<table class="tbl-ex">
 					<tr>
 						<th>번호</th>
@@ -22,27 +23,41 @@
 					{% for board in board_list %}
 					<tr>
 						<td>{{ forloop.revcounter }}</td>
-						<td><a href="/board/view?no={{board.id}}&search={{request.GET.search}}&page={{request.GET.page}}">{{ board.title }}</a></td>
+						<td style="text-align:left; padding-left:{{board.depth | mul:10}}px">
+								{% if board.depth != 0 %}
+									<img src="/assets/images/reply.png"/>
+								{% endif %}
+
+								<a href="/board/view?no={{board.id}}&search={{request.GET.search}}&page={{request.GET.page}}">{{ board.title }}</a>
+						</td>
 						<td>{{ board.user.name }}</td>
 						<td>{{ board.hit }}</td>
 						<td>{{ board.regdate | date:'Y-m-d H:i:s'}}</td>
 						{% if request.session.authuser.id == board.user.id %}
 							<td><a href="/board/delete?no={{board.id}}" class="del">삭제</a></td>
 						{% endif %}
-						<td><a href="" class="replyBoard">답글</a></td>
+						<td><a href="no={{board.id}}" class="replyBoard">답글</a></td>
 					</tr>
 					{% endfor %}
 				</table>
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						{% if board_list.has_previous %}
+							<li><a href="?search={{request.GET.search}}&page={{board_list.previous_page_number}}">◀</a></li>
+						{% endif %}
+						{% for i in page_range %}
+							{% if board_list.number == i %}
+								<li class="selected">{{ i }}</li>
+							{% else %}
+								{% if i <= board_list.paginator.num_pages %}
+									<li><a href="?search={{request.GET.search}}&page={{i}}">{{ i }}</a></li>
+								{% endif %}
+							{% endif %}
+    					{% endfor %}
+						{% if board_list.has_next %}
+							<li><a href="?search={{request.GET.search}}&page={{ board_list.next_page_number }}">▶</a></li>
+						{% endif %}
 					</ul>
 				</div>
 				<!-- pager 추가 -->
@@ -66,6 +81,29 @@
 				window.location.href="/board/write?search={{request.GET.search}}&page={{request.GET.page}}";
 				return false;
 			{% endif %}
+		});
+
+		$(".replyBoard").click(function(e){
+			e.preventDefault();
+			{% if 'authuser' not in request.session %}
+				var ans = confirm("로그인 하시겠습니까?");
+				if(ans === true){
+					window.location.href="/user/loginform";
+					return false;
+				}
+				return;
+			{% else %}
+				var no = $(this).attr("href").split("=")[1];
+				window.location.href="/board/reply/write?no="+no+"&search={{request.GET.search}}&page={{request.GET.page}}";
+				return false;
+			{% endif %}
+		});
+
+		$("#search-btn").click(function(e){
+			e.preventDefault();
+			var search = $("#search").val()
+			window.location.href="?search="+search+"&page=1";
+			return false;
 		});
 	</script>
 	{% endblock %}
