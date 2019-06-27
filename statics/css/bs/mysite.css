@@ -1,0 +1,62 @@
+.container-fluid {
+    min-width: 916px;
+}
+
+.header {
+    background-color: rgba(36, 41, 46, 1);
+    font-family: 'Nanum Gothic', sans-serif;
+    height: 70px;
+}
+
+.header .title {
+    color: rgba(172, 183, 253, 1);
+}
+
+.header .navigation {
+    font-size: 25px;
+    padding-top: 10px;
+}
+
+.header .navigation li {
+    margin: 10px;
+}
+
+.header .navigation a {
+    color: rgba(218, 218, 218, 1);
+    text-decoration: none;
+}
+
+.header .navigation a:hover {
+    color: rgba(170, 170, 170, 1);
+}
+
+.header .user-navigation {
+    text-align: right;
+}
+
+.header .user-navigation h5 {
+    color: rgba(210, 248, 253, 1);
+    padding-right: 100px;
+}
+
+.header .user-navigation .profile {
+    position: relative;
+    border: 1px solid #333;
+    width: 60px;
+    height: 60px;
+    top: -30px;
+    float: right;
+}
+
+.header .user-navigation a {
+    color: rgba(218, 218, 218, 1);
+    padding-right: 20px;
+    text-decoration: none;
+}
+
+.header .user-navigation a:hover {
+    color: rgba(170, 170, 170, 1);
+}
+
+.footer {
+}

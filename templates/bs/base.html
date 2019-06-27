@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드
+   시 이 태그들 *다음에* 와야 합니다 -->
+
+   <title>Bootstrap 101 Template</title>
+
+<!-- 부트스트랩 -->
+   <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/custom2.css" rel="stylesheet">
+   <link href="/assets/css/bs/mysite.css" rel="stylesheet">
+   {% block csslink %} {% endblock %}
+
+<!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
+<!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+   	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed
+-->
+	<script src="/assets/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+   <div class="container-fluid">
+      <div class="row header">
+
+         <div class="col-xs-3 title">
+            <h1>MySite</h1>
+         </div>
+
+         <div class="col-xs-5 navigation">
+            <ul class="list-inline">
+               <li><a href="/">안대혁</a></li>
+               <li><a href="/guestbook">방명록</a></li>
+               <li><a href="/board">게시판</a></li>
+            </ul>
+         </div>
+
+         <div class="col-xs-4 user-navigation">
+             {% if 'authuser' in request.session %}
+                  <h5>{{ request.session.authuser.name }}님 안녕하세요 ^^;</h5>
+                  <img class="profile" src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-1/p240x240/30705531_2083087868372808_5261052926483232647_n.jpg?_nc_cat=0&oh=db97a9950eade94d765d2b566ff92fbc&oe=5BE17354">
+             {% endif %}
+            <ul class="list-inline">
+               {% if 'authuser' not in request.session %}
+                  <li><a href="/user/loginform">로그인</a></li>
+                  <li><a href="/user/joinform">회원가입</a></li>
+               {% else %}
+                  <li><a href="/user/updateform">회원정보수정</a></li>
+                  <li><a href="/user/logout">로그아웃</a></li>
+               {% endif %}
+            </ul>
+         </div>
+
+      </div>
+
+      <div id="content">
+         {% block content %}
+         {% endblock %}
+      </div>
+
+      <div class="fixed-bottom footer">
+         <p>(c)opyright 2015, 2016, 2017, 2018, 2019</p>
+      </div>
+   </div>
+   {% block js %}{% endblock %}
+</body>
+</html>

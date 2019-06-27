@@ -40,8 +40,6 @@ urlpatterns = [
     path('user/joinsuccess', user_views.joinsuccess),
     path('user/join', user_views.join),
     path('user/joinform', user_views.joinform),
-    path('ajaxtest', main_views.ajaxtest),
-    path('test', main_views.test),
     path('redirect', main_views.redirect),
     path('', main_views.index),
     path('admin/', admin.site.urls),
