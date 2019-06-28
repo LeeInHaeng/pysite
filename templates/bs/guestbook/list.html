@@ -1,0 +1,48 @@
+{% extends '../base.html' %}
+{% load mathfilters %}
+ {% block csslink %}
+<link href="/assets/css/bs/guestbook.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+	{% block content %}
+			<div class="clearfix"></div>
+			<div id="guestbook" class="row">
+				<div class="col-xs-3">
+					<form action="/guestbook/add" method="post" role="form" class="form-inline">
+						{% csrf_token %}
+						<div class="form-group form-name">
+							<label class="sr-only">이름</label>
+							<input type="text" name="name" class="form-control input-lg" placeholder="이름">
+						</div>
+						<div class="form-group form-password">
+							<label class="sr-only">비밀번호</label>
+							<input type="password" name="password" class="form-control input-lg" placeholder="비밀번호">
+						</div>
+						<div class="clearfix"></div>
+						<div class="form-group form-content">
+							<label class="sr-only">내용</label>
+							<textarea name="contents" id="contents" class="form-control input-lg" placeholder="내용"></textarea>
+						</div>
+						<div class="clearfix"></div>
+						<div class="form-group form-submit">
+							<input type="submit" class="btn btn-info btn-submit" VALUE="방명록 작성">
+						</div>
+					</form>
+				</div>
+				<div class="col-xs-9 view-list">
+						{% for guestbook in guestbook_list %}
+						<div class="view-list-header">
+							<span>{{ forloop.revcounter }}</span>
+							<strong>
+								<span>{{ guestbook.name }}</span>
+							</strong>
+							<span>{{ guestbook.reg_date | date:'Y-m-d H:i:s' }}</span>
+							<span><a href="/guestbook/deleteform?no={{ guestbook.id }}">삭제</a></span>
+						</div>
+						<div class="view-list-body">
+							{{ guestbook.contents | linebreaksbr }}
+						</div>
+						{% endfor %}
+				</div>
+			</div>
+	{% endblock %}

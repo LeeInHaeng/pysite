@@ -9,7 +9,7 @@ def list(request):
     data = {
         'guestbook_list': guestbook_list
     }
-    return render(request, 'bs/guestbook/list.html', data)
+    return render(request, 'guestbook/list.html', data)
 
 
 def add(request):
